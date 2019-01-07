@@ -2,4 +2,6 @@
 
 The Stratis smart contract library, used by developers to create contracts in C#.
 
-To get started writing smart contracts, check out the documentation [here](https://academy.stratisplatform.com/SmartContracts/smart-contracts-introduction.html).
+[NuGet](https://www.nuget.org/packages/Stratis.SmartContracts)
+
+[Documentation](https://academy.stratisplatform.com/)
