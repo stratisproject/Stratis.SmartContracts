@@ -3,8 +3,7 @@
     public interface IBlock
     {
         /// <summary>
-        /// The coinbase address of the current block. 
-        /// The address that will receive the mining award for this block.
+        /// The coinbase address of the current block. This is the address that receives the mining award for this block.
         /// </summary>
         Address Coinbase { get; }
 

@@ -13,7 +13,7 @@
         Address Sender { get; }
 
         /// <summary>
-        /// The amount of STRAT sent in this call. 
+        /// The number of coins sent with this call.
         /// </summary>
         ulong Value { get; }
     }
