@@ -96,6 +96,17 @@ namespace Stratis.SmartContracts
         }
 
         /// <summary>
+        /// Recovers the address that signed a message from its message and signature.
+        /// </summary>
+        /// <param name="message">The message that was signed.</param>
+        /// <param name="signature">The signature.</param>
+        /// <returns>The address of the signer.</returns>
+        protected Address EcRecover(byte[] message, byte[] signature)
+        {
+            return this.state.EcRecoverProvider.GetSigner(message, signature);
+        }
+
+        /// <summary>
         /// Halts contract execution by throwing an exception if the input condition is not met.
         /// </summary>
         protected void Assert(bool condition, string message = "Assert failed.")
