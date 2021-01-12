@@ -2,7 +2,7 @@
 
 namespace Stratis.SmartContracts
 {
-    public class UInt256 : BigIntegerBase
+    public class UInt256 : UIntBase
     {
         const int WIDTH = 32;
 

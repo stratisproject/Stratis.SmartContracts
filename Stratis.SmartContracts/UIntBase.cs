@@ -3,41 +3,41 @@ using System.Numerics;
 
 namespace Stratis.SmartContracts
 {
-    public abstract class BigIntegerBase : IComparable
+    public abstract class UIntBase : IComparable
     {
         protected BigInteger value;
         protected int width;
 
-        public BigIntegerBase(BigIntegerBase value) : this(value.width, value.value)
+        public UIntBase(UIntBase value) : this(value.width, value.value)
         {
         }
 
-        public BigIntegerBase(int width)
+        public UIntBase(int width)
         {
             if ((width & 3) != 0)
                 throw new ArgumentException($"The '{nameof(width)}' must be a multiple of 4.");
             this.width = width;
         }
 
-        public BigIntegerBase(int width, ulong b) : this(width)
+        public UIntBase(int width, ulong b) : this(width)
         {
             SetValue(new BigInteger(b));
         }
 
-        public BigIntegerBase(int width, string hex) : this(width, HexBytes(hex))
+        public UIntBase(int width, string hex) : this(width, HexBytes(hex))
         {
         }
 
-        public BigIntegerBase(int width, BigIntegerBase value) : this(width, value.value)
+        public UIntBase(int width, UIntBase value) : this(width, value.value)
         {
         }
 
-        public BigIntegerBase(int width, BigInteger value) : this(width)
+        public UIntBase(int width, BigInteger value) : this(width)
         {
             SetValue(value);
         }
 
-        public BigIntegerBase(int width, byte[] vch, bool lendian = true) : this(width)
+        public UIntBase(int width, byte[] vch, bool lendian = true) : this(width)
         {
             if (vch.Length != this.width)
                 throw new FormatException($"The byte array should be {this.width} bytes long.");
@@ -45,7 +45,7 @@ namespace Stratis.SmartContracts
             SetValue(new BigInteger(vch, true, !lendian));
         }
 
-        public BigIntegerBase(int width, uint[] array) : this(width)
+        public UIntBase(int width, uint[] array) : this(width)
         {
             int length = this.width / 4;
 
@@ -144,10 +144,10 @@ namespace Stratis.SmartContracts
 
         public int CompareTo(object b)
         {
-            return this.value.CompareTo(((BigIntegerBase)b).value);
+            return this.value.CompareTo(((UIntBase)b).value);
         }
 
-        public static int Comparison(BigIntegerBase a, BigIntegerBase b)
+        public static int Comparison(UIntBase a, UIntBase b)
         {
             return a.CompareTo(b);
         }
