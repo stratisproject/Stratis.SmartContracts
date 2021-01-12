@@ -24,7 +24,7 @@ namespace Stratis.SmartContracts
             SetValue(new BigInteger(b));
         }
 
-                public BigIntegerBase(int width, string hex) : this(width, HexBytes(hex))
+        public BigIntegerBase(int width, string hex) : this(width, HexBytes(hex))
         {
         }
 
