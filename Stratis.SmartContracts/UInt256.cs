@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace NBitcoin
+namespace Stratis.SmartContracts
 {
     public abstract class BigInteger256 : BigIntegerBase
     {
