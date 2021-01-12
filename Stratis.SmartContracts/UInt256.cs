@@ -27,7 +27,7 @@ namespace Stratis.SmartContracts
             return new uint256(hex);
         }
 
-        public uint256(ulong b) : base(b)
+        public uint256(ulong b) : base(WIDTH, b)
         {
         }
 
