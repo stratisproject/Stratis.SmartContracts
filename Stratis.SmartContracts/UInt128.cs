@@ -124,5 +124,10 @@ namespace Stratis.SmartContracts
         {
             return new UInt128(value);
         }
+
+        public static implicit operator ulong(UInt128 value)
+        {
+            return (ulong)value.value;
+        }
     }
 }

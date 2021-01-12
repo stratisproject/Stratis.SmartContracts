@@ -24,7 +24,7 @@ namespace Stratis.SmartContracts
             SetValue(new BigInteger(b));
         }
 
-        public UIntBase(int width, string hex) : this(width, HexBytes(hex))
+        public UIntBase(int width, string hex) : this(width, HexBytes(hex), false)
         {
         }
 
@@ -39,8 +39,8 @@ namespace Stratis.SmartContracts
 
         public UIntBase(int width, byte[] vch, bool lendian = true) : this(width)
         {
-            if (vch.Length != this.width)
-                throw new FormatException($"The byte array should be {this.width} bytes long.");
+            if (vch.Length > this.width)
+                throw new FormatException($"The byte array should be {this.width} bytes or less.");
 
             SetValue(new BigInteger(vch, true, !lendian));
         }
@@ -62,6 +62,9 @@ namespace Stratis.SmartContracts
 
         private static byte[] StringToByteArray(String hex)
         {
+            if ((hex.Length & 1) != 0)
+                throw new ArgumentException("The string length must be a multiple of 2.");
+
             int NumberChars = hex.Length;
             byte[] bytes = new byte[NumberChars / 2];
             for (int i = 0; i < NumberChars; i += 2)
@@ -75,9 +78,6 @@ namespace Stratis.SmartContracts
 
             if (str.StartsWith("0x", StringComparison.OrdinalIgnoreCase))
                 str = str.Substring(2);
-
-            if ((str.Length & 1) != 0)
-                throw new ArgumentException("The string length must be a multiple of 2.");
 
             return StringToByteArray(str);
         }
