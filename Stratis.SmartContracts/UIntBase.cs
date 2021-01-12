@@ -173,7 +173,7 @@ namespace Stratis.SmartContracts
 
         public override string ToString()
         {
-            return ByteArrayToString(ToBytes(false));
+            return ByteArrayToString(ToBytes(false)).ToLower();
         }
     }
 }

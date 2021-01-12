@@ -18,5 +18,12 @@ namespace Stratis.SmartContracts.Tests
             UInt256 x = UInt256.Parse("010000000000000000");
             Assert.Throws(typeof(OverflowException), () => (ulong)x);
         }
+
+        [Fact]
+        public void CanConvertToFromBytes()
+        {
+            UInt256 x = UInt256.Parse("ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+            Assert.Equal(x, new UInt256(x.ToBytes()));
+        }
     }
 }
