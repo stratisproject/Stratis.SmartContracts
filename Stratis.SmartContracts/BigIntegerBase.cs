@@ -60,7 +60,6 @@ namespace NBitcoin
             SetValue(new BigInteger(bytes, true));
         }
 
-
         private static byte[] StringToByteArray(String hex)
         {
             int NumberChars = hex.Length;
@@ -100,7 +99,7 @@ namespace NBitcoin
             this.value = newValue;
         }
 
-        public uint[] ToUIntArray()
+        private uint[] ToUIntArray()
         {
             var bytes = this.ToBytes();
             int length = this.width / 4;
@@ -175,31 +174,6 @@ namespace NBitcoin
         public override string ToString()
         {
             return ByteArrayToString(ToBytes(false));
-        }
-
-        public byte GetByte(int n)
-        {
-            if (n >= this.width)
-                throw new ArgumentOutOfRangeException();
-
-            return this.ToBytes()[n];
-        }
-
-        public uint GetLow32()
-        {
-            var pn = ToUIntArray();
-            return pn[0];
-        }
-
-        public ulong GetULong(int position)
-        {
-            var pn = ToUIntArray();
-            int length = this.width / 8;
-
-            if (position >= length)
-                throw new ArgumentOutOfRangeException($"Argument '{nameof(position)}' should be less than {length}.", nameof(position));
-
-            return (ulong)pn[position * 2] + (ulong)((ulong)pn[position * 2 + 1] << 32);
         }
     }
 }
