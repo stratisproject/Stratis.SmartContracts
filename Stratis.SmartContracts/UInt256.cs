@@ -2,42 +2,15 @@
 
 namespace Stratis.SmartContracts
 {
-    public abstract class BigInteger256 : BigIntegerBase
+    public class uint256 : BigIntegerBase
     {
         const int WIDTH = 32;
 
-        public BigInteger256() : base(WIDTH)
+        public uint256() : base(WIDTH)
         {
         }
 
-        public BigInteger256(ulong b) : base(WIDTH, b)
-        {
-        }
-
-        public BigInteger256(string hex) : base(WIDTH, hex)
-        {
-        }
-
-        public BigInteger256(BigInteger value) : base(WIDTH, value)
-        {
-        }
-
-        public BigInteger256(byte[] vch, bool lendian = true) : base(WIDTH, vch, lendian)
-        {
-        }
-
-        public BigInteger256(uint[] array) : base(WIDTH, array)
-        {
-        }
-    }
-
-    public class uint256 : BigInteger256
-    {
-        public uint256() : base()
-        {
-        }
-
-        public uint256(BigInteger value) : base(value)
+        public uint256(BigInteger value) : base(WIDTH, value)
         {
         }
 
@@ -45,7 +18,7 @@ namespace Stratis.SmartContracts
         {
         }
 
-        public uint256(string hex) : base(hex)
+        public uint256(string hex) : base(WIDTH, hex)
         {
         }
 
@@ -58,7 +31,7 @@ namespace Stratis.SmartContracts
         {
         }
 
-        public uint256(byte[] vch, bool lendian = true) : base(vch, lendian)
+        public uint256(byte[] vch, bool lendian = true) : base(WIDTH, vch, lendian)
         {
         }
 
