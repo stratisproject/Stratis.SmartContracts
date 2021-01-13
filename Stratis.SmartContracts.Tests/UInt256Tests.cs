@@ -6,6 +6,7 @@ namespace Stratis.SmartContracts.Tests
     public class UInt256Tests
     {
         [Fact]
+        [Trait("UnitTest", "UnitTest")]
         public void CanConvertToFromUlong()
         {
             uint256 x = 50;
@@ -13,6 +14,7 @@ namespace Stratis.SmartContracts.Tests
         }
 
         [Fact]
+        [Trait("UnitTest", "UnitTest")]
         public void Uint256FromTooLargeUlongThrowsError()
         {
             uint256 x = uint256.Parse("010000000000000000");
@@ -20,6 +22,7 @@ namespace Stratis.SmartContracts.Tests
         }
 
         [Fact]
+        [Trait("UnitTest", "UnitTest")]
         public void CanConvertToFromBytes()
         {
             uint256 x = uint256.Parse("ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
@@ -37,7 +40,6 @@ namespace Stratis.SmartContracts.Tests
             Assert.Equal(new uint256("0000000000000000000000000000000000000000000000000000000000001234"), v3);
         }
 
-
         [Fact]
         [Trait("UnitTest", "UnitTest")]
         public void CanSubtract()
@@ -48,7 +50,6 @@ namespace Stratis.SmartContracts.Tests
 
             Assert.Equal(new uint256("0000000000000000000000000000000000000000000000000000000000000F0F"), v3);
         }
-
 
         [Fact]
         [Trait("UnitTest", "UnitTest")]
