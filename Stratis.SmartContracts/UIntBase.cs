@@ -91,12 +91,15 @@ namespace Stratis.SmartContracts
             return true;
         }
 
-        private void SetValue(BigInteger newValue)
+        private void SetValue(BigInteger value)
         {
-            if (TooBig(newValue.ToByteArray()))
+            if (value.Sign < 0)
+                throw new ArgumentException("Only positive or zero values are allowed.", nameof(value));
+
+            if (TooBig(value.ToByteArray()))
                 throw new OverflowException();
 
-            this.value = newValue;
+            this.value = value;
         }
 
         private uint[] ToUIntArray()

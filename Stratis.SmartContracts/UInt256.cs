@@ -7,6 +7,10 @@ namespace Stratis.SmartContracts
     {
         const int WIDTH = 32;
 
+        public static UInt256 Zero = 0;
+        public static UInt256 MinValue = 0;
+        public static UInt256 MaxValue = new UInt256((BigInteger.One << (WIDTH * 8)) - 1);
+
         public UInt256() : base(WIDTH)
         {
         }
