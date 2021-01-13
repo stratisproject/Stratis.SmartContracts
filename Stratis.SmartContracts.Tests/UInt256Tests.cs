@@ -8,33 +8,33 @@ namespace Stratis.SmartContracts.Tests
         [Fact]
         public void CanConvertToFromUlong()
         {
-            UInt256 x = 50;
+            uint256 x = 50;
             Assert.Equal((ulong)50, (ulong)x);
         }
 
         [Fact]
         public void Uint256FromTooLargeUlongThrowsError()
         {
-            UInt256 x = UInt256.Parse("010000000000000000");
+            uint256 x = uint256.Parse("010000000000000000");
             Assert.Throws(typeof(OverflowException), () => (ulong)x);
         }
 
         [Fact]
         public void CanConvertToFromBytes()
         {
-            UInt256 x = UInt256.Parse("ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-            Assert.Equal(x, new UInt256(x.ToBytes()));
+            uint256 x = uint256.Parse("ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+            Assert.Equal(x, new uint256(x.ToBytes()));
         }
 
         [Fact]
         [Trait("UnitTest", "UnitTest")]
         public void CanAdd()
         {
-            UInt256 v1 = new UInt256("0000000000000000000000000000000000000000000000000000000000000325");
-            UInt256 v2 = new UInt256("0000000000000000000000000000000000000000000000000000000000000F0F");
-            UInt256 v3 = v1 + v2;
+            uint256 v1 = new uint256("0000000000000000000000000000000000000000000000000000000000000325");
+            uint256 v2 = new uint256("0000000000000000000000000000000000000000000000000000000000000F0F");
+            uint256 v3 = v1 + v2;
 
-            Assert.Equal(new UInt256("0000000000000000000000000000000000000000000000000000000000001234"), v3);
+            Assert.Equal(new uint256("0000000000000000000000000000000000000000000000000000000000001234"), v3);
         }
 
 
@@ -42,11 +42,11 @@ namespace Stratis.SmartContracts.Tests
         [Trait("UnitTest", "UnitTest")]
         public void CanSubtract()
         {
-            UInt256 v1 = new UInt256("0000000000000000000000000000000000000000000000000000000000001234");
-            UInt256 v2 = new UInt256("0000000000000000000000000000000000000000000000000000000000000325");
-            UInt256 v3 = v1 - v2;
+            uint256 v1 = new uint256("0000000000000000000000000000000000000000000000000000000000001234");
+            uint256 v2 = new uint256("0000000000000000000000000000000000000000000000000000000000000325");
+            uint256 v3 = v1 - v2;
 
-            Assert.Equal(new UInt256("0000000000000000000000000000000000000000000000000000000000000F0F"), v3);
+            Assert.Equal(new uint256("0000000000000000000000000000000000000000000000000000000000000F0F"), v3);
         }
 
 
@@ -54,33 +54,33 @@ namespace Stratis.SmartContracts.Tests
         [Trait("UnitTest", "UnitTest")]
         public void CanMultiply()
         {
-            UInt256 v1 = new UInt256("0000000000000000000000000000000000000000000000000000000000001234");
-            UInt256 v2 = new UInt256("0000000000000000000000000000000000000000000000000000000000005678");
-            UInt256 v3 = v1 * v2;
+            uint256 v1 = new uint256("0000000000000000000000000000000000000000000000000000000000001234");
+            uint256 v2 = new uint256("0000000000000000000000000000000000000000000000000000000000005678");
+            uint256 v3 = v1 * v2;
 
-            Assert.Equal(new UInt256("0000000000000000000000000000000000000000000000000000000006260060"), v3);
+            Assert.Equal(new uint256("0000000000000000000000000000000000000000000000000000000006260060"), v3);
         }
 
         [Fact]
         [Trait("UnitTest", "UnitTest")]
         public void CanDivide()
         {
-            UInt256 v1 = new UInt256("0000000000000000000000000000000000000000000000000000000006260060");
-            UInt256 v2 = new UInt256("0000000000000000000000000000000000000000000000000000000000005678");
-            UInt256 v3 = v1 / v2;
+            uint256 v1 = new uint256("0000000000000000000000000000000000000000000000000000000006260060");
+            uint256 v2 = new uint256("0000000000000000000000000000000000000000000000000000000000005678");
+            uint256 v3 = v1 / v2;
 
-            Assert.Equal(new UInt256("0000000000000000000000000000000000000000000000000000000000001234"), v3);
+            Assert.Equal(new uint256("0000000000000000000000000000000000000000000000000000000000001234"), v3);
         }
 
         [Fact]
         [Trait("UnitTest", "UnitTest")]
         public void CanParseLargeNumbers()
         {
-            UInt256 v1 = UInt256.Parse("fffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141");
-            UInt256 v2 = UInt256.Parse("0000000000000000000000000000000ebaaedce6af48a03bbfd25e8cd0364141");
-            UInt256 v3 = v1 - v2;
+            uint256 v1 = uint256.Parse("fffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141");
+            uint256 v2 = uint256.Parse("0000000000000000000000000000000ebaaedce6af48a03bbfd25e8cd0364141");
+            uint256 v3 = v1 - v2;
 
-            Assert.Equal(new UInt256("fffffffffffffffffffffffffffffff000000000000000000000000000000000"), v3);
+            Assert.Equal(new uint256("fffffffffffffffffffffffffffffff000000000000000000000000000000000"), v3);
         }
     }
 }
