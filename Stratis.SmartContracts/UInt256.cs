@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Numerics;
 
 namespace Stratis.SmartContracts
 {
@@ -123,6 +124,14 @@ namespace Stratis.SmartContracts
         public static implicit operator uint256(ulong value)
         {
             return new uint256(value);
+        }
+
+        public static implicit operator uint256(long value)
+        {
+            if (value < 0)
+                throw new ArgumentException("Only positive or zero values are allowed.", nameof(value));
+
+            return new uint256((ulong)value);
         }
 
         public static implicit operator ulong(uint256 value)
