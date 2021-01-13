@@ -111,22 +111,20 @@ namespace Stratis.SmartContracts
             return !(a == b);
         }
 
-        public static bool operator ==(uint128 a, ulong b)
-        {
-            return (a == new uint128(b));
-        }
-
-        public static bool operator !=(uint128 a, ulong b)
-        {
-            return !(a == new uint128(b));
-        }
-
         public static implicit operator uint128(ulong value)
         {
             return new uint128(value);
         }
 
         public static implicit operator uint128(long value)
+        {
+            if (value < 0)
+                throw new ArgumentException("Only positive or zero values are allowed.", nameof(value));
+
+            return new uint128((ulong)value);
+        }
+
+        public static implicit operator uint128(int value)
         {
             if (value < 0)
                 throw new ArgumentException("Only positive or zero values are allowed.", nameof(value));

@@ -111,16 +111,6 @@ namespace Stratis.SmartContracts
             return !(a == b);
         }
 
-        public static bool operator ==(uint256 a, ulong b)
-        {
-            return (a == new uint256(b));
-        }
-
-        public static bool operator !=(uint256 a, ulong b)
-        {
-            return !(a == new uint256(b));
-        }
-
         public static implicit operator uint256(ulong value)
         {
             return new uint256(value);
@@ -133,7 +123,15 @@ namespace Stratis.SmartContracts
 
             return new uint256((ulong)value);
         }
+        
+        public static implicit operator uint256(int value)
+        {
+            if (value < 0)
+                throw new ArgumentException("Only positive or zero values are allowed.", nameof(value));
 
+            return new uint256((ulong)value);
+        }
+        
         public static implicit operator ulong(uint256 value)
         {
             return (ulong)value.value;
