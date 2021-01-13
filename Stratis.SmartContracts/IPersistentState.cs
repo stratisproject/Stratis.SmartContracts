@@ -65,6 +65,12 @@ namespace Stratis.SmartContracts
         ulong GetUInt64(string key);
 
         /// <summary>
+        /// Gets the bytes set at the value pointed to by the given key, and uses <see cref="ISerializer.ToUInt256"/> to
+        /// deserialize the value to a uint256. If deserialization is unsuccessful, returns default(uint256).
+        /// </summary>
+        uint256 GetUInt256(string key);
+
+        /// <summary>
         /// Gets the bytes set at the value pointed to by the given key, and uses <see cref="ISerializer.ToString(byte[])"/> to
         /// deserialize the value to a string. If deserialization is unsuccessful, returns <see cref="string.Empty"/>.
         /// </summary>
@@ -133,6 +139,12 @@ namespace Stratis.SmartContracts
         /// Sets the serialized bytes against the given key in state storage.
         /// </summary>
         void SetUInt64(string key, ulong value);
+
+        /// <summary>
+        /// Uses <see cref="ISerializer.Serialize(ulong)"/> to serialize a uint256 to its 32-byte representation.
+        /// Sets the serialized bytes against the given key in state storage.
+        /// </summary>
+        void SetUInt256(string key, uint256 value);
 
         /// <summary>
         /// Uses <see cref="ISerializer.Serialize(string)"/> to serialize a string to its UTF8 encoded byte representation.
