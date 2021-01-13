@@ -3,28 +3,29 @@ using System.Numerics;
 
 namespace Stratis.SmartContracts
 {
-    public class UInt256 : UIntBase
+    public struct UInt256 : IComparable
     {
         const int WIDTH = 32;
+
+        private UIntBase value;
 
         public static UInt256 Zero = 0;
         public static UInt256 MinValue = 0;
         public static UInt256 MaxValue = new UInt256((BigInteger.One << (WIDTH * 8)) - 1);
 
-        public UInt256() : base(WIDTH)
+        public UInt256(BigInteger value)
         {
+            this.value = new UIntBase(WIDTH, value);
         }
 
-        public UInt256(BigInteger value) : base(WIDTH, value)
+        public UInt256(UInt256 value)
         {
+            this.value = new UIntBase(WIDTH, value);
         }
 
-        public UInt256(UInt256 value) : this(value.value)
+        public UInt256(string hex)
         {
-        }
-
-        public UInt256(string hex) : base(WIDTH, hex)
-        {
+            this.value = new UIntBase(WIDTH, hex);
         }
 
         public static UInt256 Parse(string hex)
@@ -32,47 +33,49 @@ namespace Stratis.SmartContracts
             return new UInt256(hex);
         }
 
-        public UInt256(ulong b) : base(WIDTH, b)
+        public UInt256(ulong b)
         {
+            this.value = new UIntBase(WIDTH, b);
         }
 
-        public UInt256(byte[] vch, bool lendian = true) : base(WIDTH, vch, lendian)
+        public UInt256(byte[] vch, bool lendian = true)
         {
+            this.value = new UIntBase(WIDTH, vch, lendian);
         }
 
         public static UInt256 operator >>(UInt256 a, int shift)
         {
-            return new UInt256(a.ShiftRight(shift));
+            return new UInt256(a.value.ShiftRight(shift));
         }
 
         public static UInt256 operator <<(UInt256 a, int shift)
         {
-            return new UInt256(a.ShiftLeft(shift));
+            return new UInt256(a.value.ShiftLeft(shift));
         }
 
         public static UInt256 operator -(UInt256 a, UInt256 b)
         {
-            return new UInt256(a.Subtract(b.value));
+            return new UInt256(a.value.Subtract(b.value.GetValue()));
         }
 
         public static UInt256 operator +(UInt256 a, UInt256 b)
         {
-            return new UInt256(a.Add(b.value));
+            return new UInt256(a.value.Add(b.value.GetValue()));
         }
 
         public static UInt256 operator *(UInt256 a, UInt256 b)
         {
-            return new UInt256(a.Multiply(b.value));
+            return new UInt256(a.value.Multiply(b.value.GetValue()));
         }
 
         public static UInt256 operator /(UInt256 a, UInt256 b)
         {
-            return new UInt256(a.Divide(b.value));
+            return new UInt256(a.value.Divide(b.value.GetValue()));
         }
 
         public static UInt256 operator %(UInt256 a, UInt256 b)
         {
-            return new UInt256(a.Mod(b.value));
+            return new UInt256(a.value.Mod(b.value.GetValue()));
         }
 
         public UInt256(byte[] vch) : this(vch, true)
@@ -81,33 +84,27 @@ namespace Stratis.SmartContracts
 
         public static bool operator <(UInt256 a, UInt256 b)
         {
-            return Comparison(a, b) < 0;
+            return UIntBase.Comparison(a.value, b.value) < 0;
         }
 
         public static bool operator >(UInt256 a, UInt256 b)
         {
-            return Comparison(a, b) > 0;
+            return UIntBase.Comparison(a.value, b.value) > 0;
         }
 
         public static bool operator <=(UInt256 a, UInt256 b)
         {
-            return Comparison(a, b) <= 0;
+            return UIntBase.Comparison(a.value, b.value) <= 0;
         }
 
         public static bool operator >=(UInt256 a, UInt256 b)
         {
-            return Comparison(a, b) >= 0;
+            return UIntBase.Comparison(a.value, b.value) >= 0;
         }
 
         public static bool operator ==(UInt256 a, UInt256 b)
         {
-            if (ReferenceEquals(a, b))
-                return true;
-
-            if (((object)a == null) != ((object)b == null))
-                return false;
-
-            return Comparison(a, b) == 0;
+            return UIntBase.Comparison(a.value, b.value) == 0;
         }
 
         public static bool operator !=(UInt256 a, UInt256 b)
@@ -138,7 +135,27 @@ namespace Stratis.SmartContracts
         
         public static implicit operator ulong(UInt256 value)
         {
-            return (ulong)value.value;
+            return (ulong)value.value.GetValue();
+        }
+
+        public byte[] ToBytes()
+        {
+            return this.value.ToBytes();
+        }
+
+        public int CompareTo(object b)
+        {
+            return this.value.CompareTo(((UInt256)b).value);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.value.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            return this.CompareTo(obj) == 0;
         }
     }
 }

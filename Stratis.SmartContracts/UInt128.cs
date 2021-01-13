@@ -3,28 +3,29 @@ using System.Numerics;
 
 namespace Stratis.SmartContracts
 {
-    public class UInt128 : UIntBase
+    public struct UInt128
     {
         const int WIDTH = 16;
 
-        public static UInt128 Zero = 0;
-        public static UInt128 MinValue = 0;
-        public static UInt128 MaxValue = new UInt128((BigInteger.One << (WIDTH * 8)) - 1);
+        private UIntBase value;
 
-        public UInt128() : base(WIDTH)
+        public static UInt256 Zero = 0;
+        public static UInt256 MinValue = 0;
+        public static UInt256 MaxValue = new UInt256((BigInteger.One << (WIDTH * 8)) - 1);
+
+        public UInt128(BigInteger value)
         {
+            this.value = new UIntBase(WIDTH, value);
         }
 
-        public UInt128(BigInteger value) : base(WIDTH, value)
+        public UInt128(UInt256 value)
         {
+            this.value = new UIntBase(WIDTH, value);
         }
 
-        public UInt128(UInt128 value) : this(value.value)
+        public UInt128(string hex)
         {
-        }
-
-        public UInt128(string hex) : base(WIDTH, hex)
-        {
+            this.value = new UIntBase(WIDTH, hex);
         }
 
         public static UInt128 Parse(string hex)
@@ -32,47 +33,49 @@ namespace Stratis.SmartContracts
             return new UInt128(hex);
         }
 
-        public UInt128(ulong b) : base(WIDTH, b)
+        public UInt128(ulong b)
         {
+            this.value = new UIntBase(WIDTH, b);
         }
 
-        public UInt128(byte[] vch, bool lendian = true) : base(WIDTH, vch, lendian)
+        public UInt128(byte[] vch, bool lendian = true)
         {
+            this.value = new UIntBase(WIDTH, vch, lendian);
         }
 
         public static UInt128 operator >>(UInt128 a, int shift)
         {
-            return new UInt128(a.ShiftRight(shift));
+            return new UInt128(a.value.ShiftRight(shift));
         }
 
         public static UInt128 operator <<(UInt128 a, int shift)
         {
-            return new UInt128(a.ShiftLeft(shift));
+            return new UInt128(a.value.ShiftLeft(shift));
         }
 
         public static UInt128 operator -(UInt128 a, UInt128 b)
         {
-            return new UInt128(a.Subtract(b.value));
+            return new UInt128(a.value.Subtract(b.value.GetValue()));
         }
 
         public static UInt128 operator +(UInt128 a, UInt128 b)
         {
-            return new UInt128(a.Add(b.value));
+            return new UInt128(a.value.Add(b.value.GetValue()));
         }
 
         public static UInt128 operator *(UInt128 a, UInt128 b)
         {
-            return new UInt128(a.Multiply(b.value));
+            return new UInt128(a.value.Multiply(b.value.GetValue()));
         }
 
         public static UInt128 operator /(UInt128 a, UInt128 b)
         {
-            return new UInt128(a.Divide(b.value));
+            return new UInt128(a.value.Divide(b.value.GetValue()));
         }
 
         public static UInt128 operator %(UInt128 a, UInt128 b)
         {
-            return new UInt128(a.Mod(b.value));
+            return new UInt128(a.value.Mod(b.value.GetValue()));
         }
 
         public UInt128(byte[] vch) : this(vch, true)
@@ -81,33 +84,27 @@ namespace Stratis.SmartContracts
 
         public static bool operator <(UInt128 a, UInt128 b)
         {
-            return Comparison(a, b) < 0;
+            return UIntBase.Comparison(a.value, b.value) < 0;
         }
 
         public static bool operator >(UInt128 a, UInt128 b)
         {
-            return Comparison(a, b) > 0;
+            return UIntBase.Comparison(a.value, b.value) > 0;
         }
 
         public static bool operator <=(UInt128 a, UInt128 b)
         {
-            return Comparison(a, b) <= 0;
+            return UIntBase.Comparison(a.value, b.value) <= 0;
         }
 
         public static bool operator >=(UInt128 a, UInt128 b)
         {
-            return Comparison(a, b) >= 0;
+            return UIntBase.Comparison(a.value, b.value) >= 0;
         }
 
         public static bool operator ==(UInt128 a, UInt128 b)
         {
-            if (ReferenceEquals(a, b))
-                return true;
-
-            if (((object)a == null) != ((object)b == null))
-                return false;
-
-            return Comparison(a, b) == 0;
+            return UIntBase.Comparison(a.value, b.value) == 0;
         }
 
         public static bool operator !=(UInt128 a, UInt128 b)
@@ -138,7 +135,27 @@ namespace Stratis.SmartContracts
 
         public static implicit operator ulong(UInt128 value)
         {
-            return (ulong)value.value;
+            return (ulong)value.value.GetValue();
+        }
+
+        public byte[] ToBytes()
+        {
+            return this.value.ToBytes();
+        }
+
+        public int CompareTo(object b)
+        {
+            return this.value.CompareTo(((UInt128)b).value);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.value.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            return this.CompareTo(obj) == 0;
         }
     }
 }

@@ -3,38 +3,32 @@ using System.Numerics;
 
 namespace Stratis.SmartContracts
 {
-    public abstract class UIntBase : IComparable
+    public struct UIntBase : IComparable
     {
-        protected BigInteger value;
-        protected int width;
-
-        public UIntBase(UIntBase value) : this(value.width, value.value)
-        {
-        }
+        private int width;
+        private BigInteger value;
 
         public UIntBase(int width)
         {
             if ((width & 3) != 0)
                 throw new ArgumentException($"The '{nameof(width)}' must be a multiple of 4.");
+
             this.width = width;
-        }
-
-        public UIntBase(int width, ulong b) : this(width)
-        {
-            SetValue(new BigInteger(b));
-        }
-
-        public UIntBase(int width, string hex) : this(width, HexBytes(hex), false)
-        {
-        }
-
-        public UIntBase(int width, UIntBase value) : this(width, value.value)
-        {
         }
 
         public UIntBase(int width, BigInteger value) : this(width)
         {
             SetValue(value);
+        }
+
+        public UIntBase(int width, UIntBase value) : this(width)
+        {
+            SetValue(value.value);
+        }
+
+        public UIntBase(int width, ulong b) : this(width)
+        {
+            SetValue(new BigInteger(b));
         }
 
         public UIntBase(int width, byte[] vch, bool lendian = true) : this(width)
@@ -43,6 +37,10 @@ namespace Stratis.SmartContracts
                 throw new FormatException($"The byte array should be {this.width} bytes or less.");
 
             SetValue(new BigInteger(vch, true, !lendian));
+        }
+
+        public UIntBase(int width, string hex) : this(width, HexBytes(hex), false)
+        {
         }
 
         public UIntBase(int width, uint[] array) : this(width)
@@ -102,6 +100,11 @@ namespace Stratis.SmartContracts
             this.value = value;
         }
 
+        public BigInteger GetValue()
+        {
+            return this.value;
+        }
+
         private uint[] ToUIntArray()
         {
             var bytes = this.ToBytes();
@@ -125,13 +128,13 @@ namespace Stratis.SmartContracts
             return arr;
         }
 
-        protected BigInteger ShiftRight(int shift) => this.value >> shift;
+        internal BigInteger ShiftRight(int shift) => this.value >> shift;
 
-        protected BigInteger ShiftLeft(int shift) => this.value << shift;
+        internal BigInteger ShiftLeft(int shift) => this.value << shift;
 
-        protected BigInteger Add(BigInteger value2) => this.value + value2;
+        internal BigInteger Add(BigInteger value2) => this.value + value2;
 
-        protected BigInteger Subtract(BigInteger value2)
+        internal BigInteger Subtract(BigInteger value2)
         {
             if (this.value.CompareTo(value2) < 0)
                 throw new ArithmeticException("Number cannot be negative.");
@@ -139,11 +142,11 @@ namespace Stratis.SmartContracts
             return this.value - value2;
         }
 
-        protected BigInteger Multiply(BigInteger value2) => this.value * value2;
+        internal BigInteger Multiply(BigInteger value2) => this.value * value2;
 
-        protected BigInteger Divide(BigInteger value2) => this.value / value2;
+        internal BigInteger Divide(BigInteger value2) => this.value / value2;
 
-        protected BigInteger Mod(BigInteger value2) => this.value % value2;
+        internal BigInteger Mod(BigInteger value2) => this.value % value2;
 
         public int CompareTo(object b)
         {
