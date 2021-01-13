@@ -1,4 +1,6 @@
-﻿namespace Stratis.SmartContracts
+﻿using Amount = Stratis.SmartContracts.UInt256;
+
+namespace Stratis.SmartContracts
 {
     /// <summary>
     /// Handles the execution of transactions that happen internally to a smart contract execution, eg. when a contract transfers funds
@@ -12,12 +14,12 @@
         /// <param name="smartContractState">State representing existing contract's context.</param>
         /// <param name="addressTo">Where the funds will be transferred to.</param>
         /// <param name="amountToTransfer">The amount to send, in satoshi.</param>
-        ITransferResult Transfer(ISmartContractState smartContractState, Address addressTo, ulong amountToTransfer);
+        ITransferResult Transfer(ISmartContractState smartContractState, Address addressTo, Amount amountToTransfer);
 
         /// <summary>
         /// Calls a method on another contract.
         /// </summary>
-        ITransferResult Call(ISmartContractState smartContractState, Address addressTo, ulong amountToTransfer, string methodName, object[] parameters, ulong gasLimit = 0);
+        ITransferResult Call(ISmartContractState smartContractState, Address addressTo, Amount amountToTransfer, string methodName, object[] parameters, ulong gasLimit = 0);
 
         /// <summary>
         /// Creates a new contract.
@@ -25,6 +27,6 @@
         /// <typeparam name="T">Type of contract to create.</typeparam>
         /// <param name="smartContractState">State repository to track and persist changes to the contract.</param>
         /// <param name="amountToTransfer">Amount to send, in satoshi.</param>
-        ICreateResult Create<T>(ISmartContractState smartContractState, ulong amountToTransfer, object[] parameters, ulong gasLimit = 0);
+        ICreateResult Create<T>(ISmartContractState smartContractState, Amount amountToTransfer, object[] parameters, ulong gasLimit = 0);
     }
 }
