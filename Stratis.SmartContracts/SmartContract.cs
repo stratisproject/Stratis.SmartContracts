@@ -56,7 +56,7 @@ namespace Stratis.SmartContracts
         /// </summary>
         /// <param name="addressTo">The address to transfer the funds to.</param>
         /// <param name="amountToTransfer">The amount of funds to transfer, in satoshi.</param>
-        protected ITransferResult Transfer(Address addressTo, Amount amountToTransfer)
+        protected ITransferResult Transfer(Address addressTo, uint amountToTransfer)
         {
             return this.state.InternalTransactionExecutor.Transfer(this.state, addressTo, amountToTransfer);
         }

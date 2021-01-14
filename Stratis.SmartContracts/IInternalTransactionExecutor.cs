@@ -14,7 +14,7 @@ namespace Stratis.SmartContracts
         /// <param name="smartContractState">State representing existing contract's context.</param>
         /// <param name="addressTo">Where the funds will be transferred to.</param>
         /// <param name="amountToTransfer">The amount to send, in satoshi.</param>
-        ITransferResult Transfer(ISmartContractState smartContractState, Address addressTo, Amount amountToTransfer);
+        ITransferResult Transfer(ISmartContractState smartContractState, Address addressTo, uint amountToTransfer);
 
         /// <summary>
         /// Calls a method on another contract.
