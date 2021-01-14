@@ -37,8 +37,8 @@ namespace Stratis.SmartContracts.Tests
         [Fact]
         public void MultiplyingThrowsErrorIfResultTooBig()
         {
-            UInt256 v1 = UInt256.Parse("01ffffffffffffffffffffffffffffffff");
-            UInt256 v2 = UInt256.Parse("01ffffffffffffffffffffffffffffffff");
+            UInt256 v1 = UInt256.Parse("100000000000000000000000000000000");
+            UInt256 v2 = UInt256.Parse("100000000000000000000000000000000");
             Assert.Throws<OverflowException>(() => v1 * v2);
         }
 

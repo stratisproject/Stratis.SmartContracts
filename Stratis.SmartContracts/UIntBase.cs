@@ -58,10 +58,10 @@ namespace Stratis.SmartContracts
             SetValue(new BigInteger(bytes, true));
         }
 
-        private static byte[] StringToByteArray(String hex)
+        private static byte[] StringToByteArray(string hex)
         {
             if ((hex.Length & 1) != 0)
-                throw new ArgumentException("The string length must be a multiple of 2.");
+                hex = "0" + hex;
 
             int NumberChars = hex.Length;
             byte[] bytes = new byte[NumberChars / 2];
@@ -92,7 +92,7 @@ namespace Stratis.SmartContracts
         private void SetValue(BigInteger value)
         {
             if (value.Sign < 0)
-                throw new ArgumentException("Only positive or zero values are allowed.", nameof(value));
+                throw new OverflowException("Only positive or zero values are allowed.");
 
             if (TooBig(value.ToByteArray()))
                 throw new OverflowException();
