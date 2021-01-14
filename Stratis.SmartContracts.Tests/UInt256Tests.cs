@@ -42,6 +42,21 @@ namespace Stratis.SmartContracts.Tests
             Assert.Throws<OverflowException>(() => v1 * v2);
         }
 
+        [Fact]
+        public void DividingByZeroThrowsError()
+        {
+            UInt256 v1 = UInt256.Parse("0x100000000000000000000000000000000");
+            UInt256 v2 = UInt256.Zero;
+            Assert.Throws<DivideByZeroException>(() => v1 / v2);
+        }
+
+        [Fact]
+        public void ModByZeroThrowsError()
+        {
+            UInt256 v1 = UInt256.Parse("0x100000000000000000000000000000000");
+            UInt256 v2 = UInt256.Zero;
+            Assert.Throws<DivideByZeroException>(() => v1 % v2);
+        }
 
         [Fact]
         public void CanConvertToFromBytes()
