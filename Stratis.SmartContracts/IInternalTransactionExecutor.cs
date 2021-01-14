@@ -1,6 +1,4 @@
-﻿using Amount = Stratis.SmartContracts.UInt256;
-
-namespace Stratis.SmartContracts
+﻿namespace Stratis.SmartContracts
 {
     /// <summary>
     /// Handles the execution of transactions that happen internally to a smart contract execution, eg. when a contract transfers funds
