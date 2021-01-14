@@ -137,7 +137,7 @@ namespace Stratis.SmartContracts
         internal BigInteger Subtract(BigInteger value2)
         {
             if (this.value.CompareTo(value2) < 0)
-                throw new ArithmeticException("Number cannot be negative.");
+                throw new OverflowException("Result cannot be negative.");
 
             return this.value - value2;
         }

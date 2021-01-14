@@ -16,8 +16,32 @@ namespace Stratis.SmartContracts.Tests
         public void Uint256FromTooLargeUlongThrowsError()
         {
             UInt256 x = UInt256.Parse("010000000000000000");
-            Assert.Throws(typeof(OverflowException), () => (ulong)x);
+            Assert.Throws<OverflowException>(() => (ulong)x);
         }
+
+        [Fact]
+        public void AddingThrowsOverflowIfResultTooBig()
+        {
+            UInt256 v1 = UInt256.Parse("ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+            UInt256 v2 = UInt256.Parse("01");
+            Assert.Throws<OverflowException>(() => v1 + v2);
+        }
+
+        [Fact]
+        public void SubtractingThrowsErrorIfResultIsNegative()
+        {
+            UInt256 v1 = UInt256.Parse("ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+            Assert.Throws<OverflowException>(() => UInt256.Zero - v1);
+        }
+
+        [Fact]
+        public void MultiplyingThrowsErrorIfResultTooBig()
+        {
+            UInt256 v1 = UInt256.Parse("01ffffffffffffffffffffffffffffffff");
+            UInt256 v2 = UInt256.Parse("01ffffffffffffffffffffffffffffffff");
+            Assert.Throws<OverflowException>(() => v1 * v2);
+        }
+
 
         [Fact]
         public void CanConvertToFromBytes()
