@@ -80,7 +80,7 @@ namespace Stratis.SmartContracts
         /// <param name="amountToTransfer">The amount of funds to transfer, in satoshi.</param>
         /// <param name="parameters">The parameters to inject to the constructor.</param>
         /// <param name="gasLimit">The total amount of gas to allow this call to take up. Default is to use all remaining gas.</param>
-        protected ICreateResult Create<T>(uint amountToTransfer = 0, object[] parameters = null, ulong gasLimit = 0) where T : SmartContract
+        protected ICreateResult Create<T>(ulong amountToTransfer = 0, object[] parameters = null, ulong gasLimit = 0) where T : SmartContract
         {
             return this.state.InternalTransactionExecutor.Create<T>(this.state, amountToTransfer, parameters, gasLimit);
         }
