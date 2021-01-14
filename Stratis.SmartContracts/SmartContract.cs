@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-using Amount = Stratis.SmartContracts.UInt256;
 
 namespace Stratis.SmartContracts
 {
@@ -16,7 +15,7 @@ namespace Stratis.SmartContracts
         /// <summary>
         /// The balance of the smart contract.
         /// </summary>
-        public Amount Balance => this.state.GetBalance();
+        public ulong Balance => this.state.GetBalance();
 
         /// <summary>
         /// Details about the current block.
@@ -56,7 +55,7 @@ namespace Stratis.SmartContracts
         /// </summary>
         /// <param name="addressTo">The address to transfer the funds to.</param>
         /// <param name="amountToTransfer">The amount of funds to transfer, in satoshi.</param>
-        protected ITransferResult Transfer(Address addressTo, uint amountToTransfer)
+        protected ITransferResult Transfer(Address addressTo, ulong amountToTransfer)
         {
             return this.state.InternalTransactionExecutor.Transfer(this.state, addressTo, amountToTransfer);
         }
@@ -69,7 +68,7 @@ namespace Stratis.SmartContracts
         /// <param name="methodName">The name of the method to call on the contract.</param>
         /// <param name="parameters">The parameters to inject to the method call.</param>
         /// <param name="gasLimit">The total amount of gas to allow this call to take up. Default is to use all remaining gas.</param>
-        protected ITransferResult Call(Address addressTo, Amount amountToTransfer, string methodName, object[] parameters = null, ulong gasLimit = 0)
+        protected ITransferResult Call(Address addressTo, ulong amountToTransfer, string methodName, object[] parameters = null, ulong gasLimit = 0)
         {
             return this.state.InternalTransactionExecutor.Call(this.state, addressTo, amountToTransfer, methodName, parameters, gasLimit);
         }
@@ -81,7 +80,7 @@ namespace Stratis.SmartContracts
         /// <param name="amountToTransfer">The amount of funds to transfer, in satoshi.</param>
         /// <param name="parameters">The parameters to inject to the constructor.</param>
         /// <param name="gasLimit">The total amount of gas to allow this call to take up. Default is to use all remaining gas.</param>
-        protected ICreateResult Create<T>(Amount amountToTransfer = default(Amount), object[] parameters = null, ulong gasLimit = 0) where T : SmartContract
+        protected ICreateResult Create<T>(uint amountToTransfer = 0, object[] parameters = null, ulong gasLimit = 0) where T : SmartContract
         {
             return this.state.InternalTransactionExecutor.Create<T>(this.state, amountToTransfer, parameters, gasLimit);
         }
