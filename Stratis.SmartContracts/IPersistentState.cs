@@ -68,7 +68,7 @@ namespace Stratis.SmartContracts
         /// Gets the bytes set at the value pointed to by the given key, and uses <see cref="ISerializer.ToUInt128"/> to
         /// deserialize the value to a uint128. If deserialization is unsuccessful, returns default(uint128).
         /// </summary>
-        UInt256 GetUInt128(string key);
+        UInt128 GetUInt128(string key);
 
         /// <summary>
         /// Gets the bytes set at the value pointed to by the given key, and uses <see cref="ISerializer.ToUInt256"/> to
