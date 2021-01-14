@@ -15,6 +15,6 @@
         /// <summary>
         /// The number of coins sent with this call (in satoshis).
         /// </summary>
-        ulong Value { get; }
+        UInt256 Value { get; }
     }
 }
