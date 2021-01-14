@@ -33,6 +33,11 @@ namespace Stratis.SmartContracts
             return new UInt256(str);
         }
 
+        public UInt256(long b)
+        {
+            this.value = new UIntBase(WIDTH, b);
+        }
+
         public UInt256(ulong b)
         {
             this.value = new UIntBase(WIDTH, b);
@@ -154,18 +159,12 @@ namespace Stratis.SmartContracts
 
         public static implicit operator UInt256(long value)
         {
-            if (value < 0)
-                throw new ArgumentException("Only positive or zero values are allowed.", nameof(value));
-
-            return new UInt256((ulong)value);
+            return new UInt256(value);
         }
         
         public static implicit operator UInt256(int value)
         {
-            if (value < 0)
-                throw new ArgumentException("Only positive or zero values are allowed.", nameof(value));
-
-            return new UInt256((ulong)value);
+            return new UInt256(value);
         }
         
         public static implicit operator ulong(UInt256 value)

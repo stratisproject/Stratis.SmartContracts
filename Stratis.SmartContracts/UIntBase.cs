@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace Stratis.SmartContracts
 {
-    public struct UIntBase : IComparable
+    internal struct UIntBase : IComparable
     {
         private int width;
         private BigInteger value;

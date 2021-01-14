@@ -92,7 +92,12 @@ namespace Stratis.SmartContracts
         ulong ToUInt64(byte[] val);
 
         /// <summary>
-        /// Deserializes the first 32 bytes of a byte array into an uint256. If the given bytes are null, empty, or deserialization fails, returns default(uint256).
+        /// Deserializes the first 16 bytes of a byte array into an UInt128. If the given bytes are null, empty, or deserialization fails, returns default(UInt128).
+        /// </summary>
+        UInt128 ToUInt128(byte[] val);
+
+        /// <summary>
+        /// Deserializes the first 32 bytes of a byte array into an UInt256. If the given bytes are null, empty, or deserialization fails, returns default(UInt256).
         /// </summary>
         UInt256 ToUInt256(byte[] val);
 

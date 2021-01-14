@@ -9,9 +9,9 @@ namespace Stratis.SmartContracts
 
         private UIntBase value;
 
-        public static UInt256 Zero = 0;
-        public static UInt256 MinValue = 0;
-        public static UInt256 MaxValue = new UInt256((BigInteger.One << (WIDTH * 8)) - 1);
+        public static UInt128 Zero = 0;
+        public static UInt128 MinValue = 0;
+        public static UInt128 MaxValue = new UInt128((BigInteger.One << (WIDTH * 8)) - 1);
 
         public UInt128(BigInteger value)
         {
@@ -31,6 +31,11 @@ namespace Stratis.SmartContracts
         public static UInt128 Parse(string str)
         {
             return new UInt128(str);
+        }
+
+        public UInt128(long b)
+        {
+            this.value = new UIntBase(WIDTH, b);
         }
 
         public UInt128(ulong b)
@@ -53,26 +58,61 @@ namespace Stratis.SmartContracts
             return new UInt128(a.value.ShiftLeft(shift));
         }
 
+        /// <summary>
+        /// Subtracts the first number from the second.
+        /// </summary>
+        /// <param name="a">Number to subtract from.</param>
+        /// <param name="b">Number to subtract.</param>
+        /// <returns>The result as a zero or positive number.</returns>
+        /// <exception cref="OverflowException">Always thrown if the result is negative regardless of checked context.</exception>
         public static UInt128 operator -(UInt128 a, UInt128 b)
         {
             return new UInt128(a.value.Subtract(b.value.GetValue()));
         }
 
+        /// <summary>
+        /// Adds two numbers.
+        /// </summary>
+        /// <param name="a">Number to add.</param>
+        /// <param name="b">Number to add.</param>
+        /// <returns>The result as a zero or positive number.</returns>
+        /// <exception cref="OverflowException">Always thrown if the result is greater than <see cref="MaxValue"/>.</exception>
         public static UInt128 operator +(UInt128 a, UInt128 b)
         {
             return new UInt128(a.value.Add(b.value.GetValue()));
         }
 
+        /// <summary>
+        /// Multiplies two numbers.
+        /// </summary>
+        /// <param name="a">Number to multiply.</param>
+        /// <param name="b">Number to multiply.</param>
+        /// <returns>The result as a zero or positive number.</returns>
+        /// <exception cref="OverflowException">Always thrown if the result is greater than <see cref="MaxValue"/>.</exception>
         public static UInt128 operator *(UInt128 a, UInt128 b)
         {
             return new UInt128(a.value.Multiply(b.value.GetValue()));
         }
 
+        /// <summary>
+        /// Divides the first number by the second.
+        /// </summary>
+        /// <param name="a">Number to divide.</param>
+        /// <param name="b">Number to divide by.</param>
+        /// <returns>The result as a zero or positive number.</returns>
+        /// <exception cref="DivideByZeroException">Always thrown if <paramref name="b"/> is zero.</exception>
         public static UInt128 operator /(UInt128 a, UInt128 b)
         {
             return new UInt128(a.value.Divide(b.value.GetValue()));
         }
 
+        /// <summary>
+        /// Computes the remainder of the division of the first number by the second - i.e. a mod b.
+        /// </summary>
+        /// <param name="a">Number to divide.</param>
+        /// <param name="b">Number to divide by.</param>
+        /// <returns>The remainder as a zero or positive number.</returns>
+        /// <exception cref="DivideByZeroException">Always thrown if <paramref name="b"/> is zero.</exception>
         public static UInt128 operator %(UInt128 a, UInt128 b)
         {
             return new UInt128(a.value.Mod(b.value.GetValue()));
@@ -119,18 +159,12 @@ namespace Stratis.SmartContracts
 
         public static implicit operator UInt128(long value)
         {
-            if (value < 0)
-                throw new ArgumentException("Only positive or zero values are allowed.", nameof(value));
-
-            return new UInt128((ulong)value);
+            return new UInt128(value);
         }
 
         public static implicit operator UInt128(int value)
         {
-            if (value < 0)
-                throw new ArgumentException("Only positive or zero values are allowed.", nameof(value));
-
-            return new UInt128((ulong)value);
+            return new UInt128(value);
         }
 
         public static implicit operator ulong(UInt128 value)
