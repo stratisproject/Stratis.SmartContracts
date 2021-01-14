@@ -6,7 +6,6 @@ namespace Stratis.SmartContracts.Tests
     public class UInt256Tests
     {
         [Fact]
-        [Trait("UnitTest", "UnitTest")]
         public void CanConvertToFromUlong()
         {
             UInt256 x = 50;
@@ -14,7 +13,6 @@ namespace Stratis.SmartContracts.Tests
         }
 
         [Fact]
-        [Trait("UnitTest", "UnitTest")]
         public void Uint256FromTooLargeUlongThrowsError()
         {
             UInt256 x = UInt256.Parse("010000000000000000");
@@ -22,7 +20,6 @@ namespace Stratis.SmartContracts.Tests
         }
 
         [Fact]
-        [Trait("UnitTest", "UnitTest")]
         public void CanConvertToFromBytes()
         {
             UInt256 x = UInt256.Parse("ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
@@ -30,7 +27,6 @@ namespace Stratis.SmartContracts.Tests
         }
 
         [Fact]
-        [Trait("UnitTest", "UnitTest")]
         public void CanAdd()
         {
             UInt256 v1 = new UInt256("0000000000000000000000000000000000000000000000000000000000000325");
@@ -41,7 +37,6 @@ namespace Stratis.SmartContracts.Tests
         }
 
         [Fact]
-        [Trait("UnitTest", "UnitTest")]
         public void CanSubtract()
         {
             UInt256 v1 = new UInt256("0000000000000000000000000000000000000000000000000000000000001234");
@@ -52,7 +47,6 @@ namespace Stratis.SmartContracts.Tests
         }
 
         [Fact]
-        [Trait("UnitTest", "UnitTest")]
         public void CanMultiply()
         {
             UInt256 v1 = new UInt256("0000000000000000000000000000000000000000000000000000000000001234");
@@ -63,7 +57,6 @@ namespace Stratis.SmartContracts.Tests
         }
 
         [Fact]
-        [Trait("UnitTest", "UnitTest")]
         public void CanDivide()
         {
             UInt256 v1 = new UInt256("0000000000000000000000000000000000000000000000000000000006260060");
@@ -74,7 +67,6 @@ namespace Stratis.SmartContracts.Tests
         }
 
         [Fact]
-        [Trait("UnitTest", "UnitTest")]
         public void CanParseLargeNumbers()
         {
             UInt256 v1 = UInt256.Parse("fffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141");
