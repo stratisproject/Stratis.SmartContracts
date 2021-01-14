@@ -39,8 +39,12 @@ namespace Stratis.SmartContracts
             SetValue(new BigInteger(vch, true, !lendian));
         }
 
-        public UIntBase(int width, string hex) : this(width, HexBytes(hex), false)
+        public UIntBase(int width, string str) : this(width)
         {
+            if (str.StartsWith("0x"))
+                SetValue(BigInteger.Parse("0" + str.Substring(2), System.Globalization.NumberStyles.HexNumber));
+            else
+                SetValue(BigInteger.Parse(str));
         }
 
         public UIntBase(int width, uint[] array) : this(width)
@@ -56,28 +60,6 @@ namespace Stratis.SmartContracts
                 BitConverter.GetBytes(array[i]).CopyTo(bytes, i * 4);
 
             SetValue(new BigInteger(bytes, true));
-        }
-
-        private static byte[] StringToByteArray(string hex)
-        {
-            if ((hex.Length & 1) != 0)
-                hex = "0" + hex;
-
-            int NumberChars = hex.Length;
-            byte[] bytes = new byte[NumberChars / 2];
-            for (int i = 0; i < NumberChars; i += 2)
-                bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
-            return bytes;
-        }
-
-        private static byte[] HexBytes(string str)
-        {
-            str = str.ToLower().Trim();
-
-            if (str.StartsWith("0x", StringComparison.OrdinalIgnoreCase))
-                str = str.Substring(2);
-
-            return StringToByteArray(str);
         }
 
         private bool TooBig(byte[] bytes)
@@ -177,9 +159,14 @@ namespace Stratis.SmartContracts
             return BitConverter.ToString(ba).Replace("-", "");
         }
 
-        public override string ToString()
+        public string ToHex()
         {
             return ByteArrayToString(ToBytes(false)).ToLower();
+        }
+
+        public override string ToString()
+        {
+            return this.value.ToString();
         }
     }
 }

@@ -28,9 +28,9 @@ namespace Stratis.SmartContracts
             this.value = new UIntBase(WIDTH, hex);
         }
 
-        public static UInt128 Parse(string hex)
+        public static UInt128 Parse(string str)
         {
-            return new UInt128(hex);
+            return new UInt128(str);
         }
 
         public UInt128(ulong b)
@@ -156,6 +156,11 @@ namespace Stratis.SmartContracts
         public override bool Equals(object obj)
         {
             return this.CompareTo(obj) == 0;
+        }
+
+        public override string ToString()
+        {
+            return this.value.ToString();
         }
     }
 }
