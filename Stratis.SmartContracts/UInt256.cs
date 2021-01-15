@@ -11,17 +11,7 @@ namespace Stratis.SmartContracts
 
         public static UInt256 Zero = 0;
         public static UInt256 MinValue = 0;
-        public static UInt256 MaxValue = new UInt256((BigInteger.One << (WIDTH * 8)) - 1);
-
-        public UInt256(BigInteger value)
-        {
-            this.value = new UIntBase(WIDTH, value);
-        }
-
-        public UInt256(UInt256 value)
-        {
-            this.value = new UIntBase(WIDTH, value);
-        }
+        public static UInt256 MaxValue = (BigInteger.One << (WIDTH * 8)) - 1;        
 
         public UInt256(string hex)
         {
@@ -33,14 +23,9 @@ namespace Stratis.SmartContracts
             return new UInt256(str);
         }
 
-        public UInt256(long b)
+        public UInt256(BigInteger value)
         {
-            this.value = new UIntBase(WIDTH, b);
-        }
-
-        public UInt256(ulong b)
-        {
-            this.value = new UIntBase(WIDTH, b);
+            this.value = new UIntBase(WIDTH, value);
         }
 
         public UInt256(byte[] vch, bool lendian = true)
@@ -161,15 +146,50 @@ namespace Stratis.SmartContracts
         {
             return new UInt256(value);
         }
-        
+  
         public static implicit operator UInt256(int value)
         {
             return new UInt256(value);
         }
-        
+
+        public static implicit operator UInt256(uint value)
+        {
+            return new UInt256(value);
+        }
+
+        public static implicit operator UInt256(BigInteger value)
+        {
+            return new UInt256(value);
+        }
+
+        public static implicit operator UInt256(UInt128 value)
+        {
+            return new UInt256(value);
+        }
+
+        public static implicit operator int(UInt256 value)
+        {
+            return (int)value.value.GetValue();
+        }
+
+        public static implicit operator uint(UInt256 value)
+        {
+            return (uint)value.value.GetValue();
+        }
+
+        public static implicit operator long(UInt256 value)
+        {
+            return (long)value.value.GetValue();
+        }
+
         public static implicit operator ulong(UInt256 value)
         {
             return (ulong)value.value.GetValue();
+        }
+
+        public static implicit operator BigInteger(UInt256 value)
+        {
+            return value.value.GetValue();
         }
 
         public byte[] ToBytes()

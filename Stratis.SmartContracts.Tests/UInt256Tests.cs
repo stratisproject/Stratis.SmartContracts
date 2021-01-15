@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using Xunit;
 
 namespace Stratis.SmartContracts.Tests
@@ -113,6 +114,36 @@ namespace Stratis.SmartContracts.Tests
             UInt256 v3 = v1 - v2;
 
             Assert.Equal(new UInt256("0xfffffffffffffffffffffffffffffff000000000000000000000000000000000"), v3);
+        }
+
+        [Fact]
+        public void CanCast()
+        {
+            UInt256 v1 = UInt256.Parse("0x12345678");
+
+            Assert.Equal<uint>(0x12345678, v1);
+            Assert.Equal<int>(0x12345678, v1);
+            Assert.Equal<ulong>(0x12345678, v1);
+            Assert.Equal<long>(0x12345678, v1);
+            Assert.Equal<BigInteger>(0x12345678, v1);
+            Assert.Equal<UInt128>(0x12345678, v1);
+            Assert.Equal<UInt256>(0x12345678, v1);
+
+            UInt128 v2 = UInt128.Parse("0x12345678");
+
+            Assert.Equal<uint>(0x12345678, v2);
+            Assert.Equal<int>(0x12345678, v2);
+            Assert.Equal<ulong>(0x12345678, v2);
+            Assert.Equal<long>(0x12345678, v2);
+            Assert.Equal<BigInteger>(0x12345678, v2);
+            Assert.Equal<UInt128>(0x12345678, v2);
+            Assert.Equal<UInt256>(0x12345678, v2);
+        }
+
+        [Fact]
+        public void CastTooBigNumberCausesOverflow()
+        {
+            Assert.Throws<OverflowException>(() => (int)UInt256.Parse("0x12345678123456789"));
         }
     }
 }

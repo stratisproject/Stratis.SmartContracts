@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace Stratis.SmartContracts
 {
-    public struct UInt128
+    public struct UInt128 : IComparable
     {
         const int WIDTH = 16;
 
@@ -11,17 +11,7 @@ namespace Stratis.SmartContracts
 
         public static UInt128 Zero = 0;
         public static UInt128 MinValue = 0;
-        public static UInt128 MaxValue = new UInt128((BigInteger.One << (WIDTH * 8)) - 1);
-
-        public UInt128(BigInteger value)
-        {
-            this.value = new UIntBase(WIDTH, value);
-        }
-
-        public UInt128(UInt256 value)
-        {
-            this.value = new UIntBase(WIDTH, value);
-        }
+        public static UInt128 MaxValue = (BigInteger.One << (WIDTH * 8)) - 1;
 
         public UInt128(string hex)
         {
@@ -33,14 +23,9 @@ namespace Stratis.SmartContracts
             return new UInt128(str);
         }
 
-        public UInt128(long b)
+        public UInt128(BigInteger value)
         {
-            this.value = new UIntBase(WIDTH, b);
-        }
-
-        public UInt128(ulong b)
-        {
-            this.value = new UIntBase(WIDTH, b);
+            this.value = new UIntBase(WIDTH, value);
         }
 
         public UInt128(byte[] vch, bool lendian = true)
@@ -167,9 +152,44 @@ namespace Stratis.SmartContracts
             return new UInt128(value);
         }
 
+        public static implicit operator UInt128(uint value)
+        {
+            return new UInt128(value);
+        }
+
+        public static implicit operator UInt128(BigInteger value)
+        {
+            return new UInt128(value);
+        }
+
+        public static implicit operator UInt128(UInt256 value)
+        {
+            return new UInt128(value);
+        }
+
+        public static implicit operator int(UInt128 value)
+        {
+            return (int)value.value.GetValue();
+        }
+
+        public static implicit operator uint(UInt128 value)
+        {
+            return (uint)value.value.GetValue();
+        }
+
+        public static implicit operator long(UInt128 value)
+        {
+            return (long)value.value.GetValue();
+        }
+
         public static implicit operator ulong(UInt128 value)
         {
             return (ulong)value.value.GetValue();
+        }
+
+        public static implicit operator BigInteger(UInt128 value)
+        {
+            return value.value.GetValue();
         }
 
         public byte[] ToBytes()
