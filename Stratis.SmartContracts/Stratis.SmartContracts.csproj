@@ -5,7 +5,8 @@
     <Authors>Stratis Group Ltd.</Authors>
     <Company>Stratis Group Ltd.</Company>
     <Product>Stratis Smart Contracts</Product>
-    <Version>1.3</Version>
+    <Version>1.3.0</Version>
+    <VersionSuffix>alpha</VersionSuffix>
     <PackageId>Stratis.SmartContracts</PackageId>
 	<CodeAnalysisRuleSet>..\None.ruleset</CodeAnalysisRuleSet>
 	<AssemblyVersion>1.3.0.0</AssemblyVersion>
