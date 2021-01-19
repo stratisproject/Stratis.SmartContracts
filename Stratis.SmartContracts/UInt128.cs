@@ -9,9 +9,9 @@ namespace Stratis.SmartContracts
 
         private UIntBase value;
 
-        public static UInt128 Zero = 0;
-        public static UInt128 MinValue = 0;
-        public static UInt128 MaxValue = (BigInteger.One << (WIDTH * 8)) - 1;
+        public static UInt128 Zero => 0;
+        public static UInt128 MinValue => 0;
+        public static UInt128 MaxValue => (BigInteger.One << (WIDTH * 8)) - 1;
 
         public UInt128(string hex)
         {
