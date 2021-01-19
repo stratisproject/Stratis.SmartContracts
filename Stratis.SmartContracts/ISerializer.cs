@@ -40,6 +40,16 @@ namespace Stratis.SmartContracts
         byte[] Serialize(ulong ul);
 
         /// <summary>
+        /// Serializes a UInt128 into its 16-byte representation.
+        /// </summary>
+        byte[] Serialize(UInt128 uInt128);
+
+        /// <summary>
+        /// Serializes a UInt256 into its 32-byte representation.
+        /// </summary>
+        byte[] Serialize(UInt256 uInt256);
+
+        /// <summary>
         /// Serializes a string into its UTF8 encoded byte array.
         /// </summary>
         byte[] Serialize(string s);
