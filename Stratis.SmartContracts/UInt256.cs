@@ -11,7 +11,7 @@ namespace Stratis.SmartContracts
 
         public static UInt256 Zero => 0;
         public static UInt256 MinValue => 0;
-        public static UInt256 MaxValue => (BigInteger.One << (WIDTH * 8)) - 1;        
+        public static UInt256 MaxValue => new UInt256((BigInteger.One << (WIDTH * 8)) - 1);        
 
         public UInt256(string hex)
         {
@@ -23,7 +23,7 @@ namespace Stratis.SmartContracts
             return new UInt256(str);
         }
 
-        public UInt256(BigInteger value)
+        private UInt256(BigInteger value)
         {
             this.value = new UIntBase(WIDTH, value);
         }
@@ -157,39 +157,44 @@ namespace Stratis.SmartContracts
             return new UInt256(value);
         }
 
-        public static implicit operator UInt256(BigInteger value)
-        {
-            return new UInt256(value);
-        }
-
         public static implicit operator UInt256(UInt128 value)
         {
-            return new UInt256(value);
+            var bytes = new byte[32];
+            value.ToBytes().CopyTo(bytes, 0);
+            return new UInt256(bytes);
         }
 
-        public static implicit operator int(UInt256 value)
+        public static explicit operator int(UInt256 value)
         {
             return (int)value.value.GetValue();
         }
 
-        public static implicit operator uint(UInt256 value)
+        public static explicit operator uint(UInt256 value)
         {
             return (uint)value.value.GetValue();
         }
 
-        public static implicit operator long(UInt256 value)
+        public static explicit operator long(UInt256 value)
         {
             return (long)value.value.GetValue();
         }
 
-        public static implicit operator ulong(UInt256 value)
+        public static explicit operator ulong(UInt256 value)
         {
             return (ulong)value.value.GetValue();
         }
 
-        public static implicit operator BigInteger(UInt256 value)
+        public static explicit operator UInt128(UInt256 value)
         {
-            return value.value.GetValue();
+            var bytes = value.ToBytes();
+            var firstHalf = new byte[16];
+            var secondHalf = new byte[16];
+            Array.Copy(bytes, 0, firstHalf, 0, 16);
+            Array.Copy(bytes, 16, secondHalf, 0, 16);
+            if (new UInt128(secondHalf) != UInt128.Zero)
+                throw new OverflowException();
+
+            return new UInt128(firstHalf);
         }
 
         public byte[] ToBytes()
