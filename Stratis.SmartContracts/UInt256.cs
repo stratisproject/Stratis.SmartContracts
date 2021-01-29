@@ -7,7 +7,7 @@ namespace Stratis.SmartContracts
     {
         const int WIDTH = 32;
 
-        private UIntBase value;
+        internal UIntBase value;
 
         public static UInt256 Zero => 0;
         public static UInt256 MinValue => 0;
@@ -23,7 +23,7 @@ namespace Stratis.SmartContracts
             return new UInt256(str);
         }
 
-        private UInt256(BigInteger value)
+        internal UInt256(BigInteger value)
         {
             this.value = new UIntBase(WIDTH, value);
         }
@@ -186,15 +186,7 @@ namespace Stratis.SmartContracts
 
         public static explicit operator UInt128(UInt256 value)
         {
-            var bytes = value.ToBytes();
-            var firstHalf = new byte[16];
-            var secondHalf = new byte[16];
-            Array.Copy(bytes, 0, firstHalf, 0, 16);
-            Array.Copy(bytes, 16, secondHalf, 0, 16);
-            if (new UInt128(secondHalf) != UInt128.Zero)
-                throw new OverflowException();
-
-            return new UInt128(firstHalf);
+            return new UInt128(value.value.GetValue());
         }
 
         public byte[] ToBytes()

@@ -7,7 +7,7 @@ namespace Stratis.SmartContracts
     {
         const int WIDTH = 16;
 
-        private UIntBase value;
+        internal UIntBase value;
 
         public static UInt128 Zero => 0;
         public static UInt128 MinValue => 0;
@@ -23,7 +23,7 @@ namespace Stratis.SmartContracts
             return new UInt128(str);
         }
 
-        private UInt128(BigInteger value)
+        internal UInt128(BigInteger value)
         {
             this.value = new UIntBase(WIDTH, value);
         }
