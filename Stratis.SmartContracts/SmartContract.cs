@@ -49,10 +49,10 @@ namespace Stratis.SmartContracts
         /// </summary>
         private readonly ISmartContractState contractState;
 
-        public SmartContract(ISmartContractState state)
+        public SmartContract(ISmartContractState contractState)
         {
             CultureInfo.CurrentCulture = new CultureInfo("en-US");
-            this.contractState = state;
+            this.contractState = contractState;
         }
 
         /// <summary>
