@@ -137,15 +137,6 @@ namespace Stratis.SmartContracts.Tests
             Assert.Equal<long>(0x12345678, (long)v1);
             Assert.Equal<UInt128>(0x12345678, (UInt128)v1);
             Assert.Equal<UInt256>(0x12345678, v1);
-
-            UInt128 v2 = UInt128.Parse("0x12345678");
-
-            Assert.Equal<uint>(0x12345678, (uint)v2);
-            Assert.Equal<int>(0x12345678, (int)v2);
-            Assert.Equal<ulong>(0x12345678, (ulong)v2);
-            Assert.Equal<long>(0x12345678, (long)v2);
-            Assert.Equal<UInt128>(0x12345678, v2);
-            Assert.Equal<UInt256>(0x12345678, v2);
         }
 
         [Fact]
