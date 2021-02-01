@@ -40,6 +40,16 @@ namespace Stratis.SmartContracts
         byte[] Serialize(ulong ul);
 
         /// <summary>
+        /// Serializes a UInt128 into its 16-byte representation.
+        /// </summary>
+        byte[] Serialize(UInt128 uInt128);
+
+        /// <summary>
+        /// Serializes a UInt256 into its 32-byte representation.
+        /// </summary>
+        byte[] Serialize(UInt256 uInt256);
+
+        /// <summary>
         /// Serializes a string into its UTF8 encoded byte array.
         /// </summary>
         byte[] Serialize(string s);
@@ -90,6 +100,16 @@ namespace Stratis.SmartContracts
         /// Deserializes the first 8 bytes of a byte array into an unsigned long. If the given bytes are null, empty, or deserialization fails, returns default(ulong).
         /// </summary>
         ulong ToUInt64(byte[] val);
+
+        /// <summary>
+        /// Deserializes the first 16 bytes of a byte array into an UInt128. If the given bytes are null, empty, or deserialization fails, returns default(UInt128).
+        /// </summary>
+        UInt128 ToUInt128(byte[] val);
+
+        /// <summary>
+        /// Deserializes the first 32 bytes of a byte array into an UInt256. If the given bytes are null, empty, or deserialization fails, returns default(UInt256).
+        /// </summary>
+        UInt256 ToUInt256(byte[] val);
 
         /// <summary>
         /// Deserializes bytes into a string using UTF8. If the given bytes are null, empty, or deserialization fails, returns <see cref="string.Empty"/>.
