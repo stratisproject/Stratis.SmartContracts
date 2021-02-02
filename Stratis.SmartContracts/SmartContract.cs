@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 
 namespace Stratis.SmartContracts
 {
@@ -10,42 +11,48 @@ namespace Stratis.SmartContracts
         /// <summary>
         /// The address of the smart contract.
         /// </summary>
-        protected Address Address => this.state.Message.ContractAddress;
+        protected Address Address => this.contractState.Message.ContractAddress;
 
         /// <summary>
         /// The balance of the smart contract.
         /// </summary>
-        public ulong Balance => this.state.GetBalance();
+        public ulong Balance => this.contractState.GetBalance();
 
         /// <summary>
         /// Details about the current block.
         /// </summary>
-        public IBlock Block => this.state.Block;
+        public IBlock Block => this.contractState.Block;
 
         /// <summary>
         /// Details about the current transaction that has been sent.
         /// </summary>
-        public IMessage Message => this.state.Message;
+        public IMessage Message => this.contractState.Message;
 
         /// <summary>
         ///  Provides functionality for the saving and retrieval of objects inside smart contracts.
         /// </summary>
-        public IPersistentState PersistentState => this.state.PersistentState;
+        [Obsolete("Please use State property as shorthand", error: false)]
+        public IPersistentState PersistentState => this.contractState.PersistentState;
+
+        /// <summary>
+        ///  Provides functionality for the saving and retrieval of objects inside smart contracts.
+        /// </summary>
+        public IPersistentState State => this.contractState.PersistentState;
 
         /// <summary>
         /// Provides functionality for the serialization and deserialization of primitives to bytes inside smart contracts.
         /// </summary>
-        public ISerializer Serializer => this.state.Serializer;
+        public ISerializer Serializer => this.contractState.Serializer;
 
         /// <summary>
         /// The execution state provided to the contract.
         /// </summary>
-        private readonly ISmartContractState state;
+        private readonly ISmartContractState contractState;
 
-        public SmartContract(ISmartContractState state)
+        public SmartContract(ISmartContractState contractState)
         {
             CultureInfo.CurrentCulture = new CultureInfo("en-US");
-            this.state = state;
+            this.contractState = contractState;
         }
 
         /// <summary>
@@ -57,7 +64,7 @@ namespace Stratis.SmartContracts
         /// <param name="amountToTransfer">The amount of funds to transfer, in satoshi.</param>
         protected ITransferResult Transfer(Address addressTo, ulong amountToTransfer)
         {
-            return this.state.InternalTransactionExecutor.Transfer(this.state, addressTo, amountToTransfer);
+            return this.contractState.InternalTransactionExecutor.Transfer(this.contractState, addressTo, amountToTransfer);
         }
 
         /// <summary>
@@ -70,7 +77,7 @@ namespace Stratis.SmartContracts
         /// <param name="gasLimit">The total amount of gas to allow this call to take up. Default is to use all remaining gas.</param>
         protected ITransferResult Call(Address addressTo, ulong amountToTransfer, string methodName, object[] parameters = null, ulong gasLimit = 0)
         {
-            return this.state.InternalTransactionExecutor.Call(this.state, addressTo, amountToTransfer, methodName, parameters, gasLimit);
+            return this.contractState.InternalTransactionExecutor.Call(this.contractState, addressTo, amountToTransfer, methodName, parameters, gasLimit);
         }
 
         /// <summary>
@@ -82,7 +89,7 @@ namespace Stratis.SmartContracts
         /// <param name="gasLimit">The total amount of gas to allow this call to take up. Default is to use all remaining gas.</param>
         protected ICreateResult Create<T>(ulong amountToTransfer = 0, object[] parameters = null, ulong gasLimit = 0) where T : SmartContract
         {
-            return this.state.InternalTransactionExecutor.Create<T>(this.state, amountToTransfer, parameters, gasLimit);
+            return this.contractState.InternalTransactionExecutor.Create<T>(this.contractState, amountToTransfer, parameters, gasLimit);
         }
 
         /// <summary>
@@ -92,7 +99,7 @@ namespace Stratis.SmartContracts
         /// <returns></returns>
         protected byte[] Keccak256(byte[] toHash)
         {
-            return this.state.InternalHashHelper.Keccak256(toHash);
+            return this.contractState.InternalHashHelper.Keccak256(toHash);
         }
 
         /// <summary>
@@ -110,7 +117,7 @@ namespace Stratis.SmartContracts
         /// <param name="toLog">A struct representing the data to log.</param>
         protected void Log<T>(T toLog) where T : struct
         {
-            this.state.ContractLogger.Log(this.state, toLog);
+            this.contractState.ContractLogger.Log(this.contractState, toLog);
         }
 
         /// <summary>
@@ -120,6 +127,6 @@ namespace Stratis.SmartContracts
         /// This occurs when a contract sends funds to another contract using <see cref="Transfer"/>.
         /// </para>
         /// </summary>
-        public virtual void Receive() {}
+        public virtual void Receive() { }
     }
 }
