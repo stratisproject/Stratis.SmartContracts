@@ -117,27 +117,26 @@ namespace Stratis.SmartContracts.Tests
         }
 
         [Fact]
+        public void TooBigUInt128CastThrowsOverflow()
+        {
+            UInt256 v1 = UInt256.Parse("0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141");
+            UInt256 v2 = UInt256.Parse("0xbaaedce6af48a03bbfd25e8cd0364141");
+
+            Assert.Throws<OverflowException>(() => (UInt128)v1);
+            var dummy = (UInt128)v2;
+        }
+
+        [Fact]
         public void CanCast()
         {
             UInt256 v1 = UInt256.Parse("0x12345678");
 
-            Assert.Equal<uint>(0x12345678, v1);
-            Assert.Equal<int>(0x12345678, v1);
-            Assert.Equal<ulong>(0x12345678, v1);
-            Assert.Equal<long>(0x12345678, v1);
-            Assert.Equal<BigInteger>(0x12345678, v1);
-            Assert.Equal<UInt128>(0x12345678, v1);
+            Assert.Equal<uint>(0x12345678, (uint)v1);
+            Assert.Equal<int>(0x12345678, (int)v1);
+            Assert.Equal<ulong>(0x12345678, (ulong)v1);
+            Assert.Equal<long>(0x12345678, (long)v1);
+            Assert.Equal<UInt128>(0x12345678, (UInt128)v1);
             Assert.Equal<UInt256>(0x12345678, v1);
-
-            UInt128 v2 = UInt128.Parse("0x12345678");
-
-            Assert.Equal<uint>(0x12345678, v2);
-            Assert.Equal<int>(0x12345678, v2);
-            Assert.Equal<ulong>(0x12345678, v2);
-            Assert.Equal<long>(0x12345678, v2);
-            Assert.Equal<BigInteger>(0x12345678, v2);
-            Assert.Equal<UInt128>(0x12345678, v2);
-            Assert.Equal<UInt256>(0x12345678, v2);
         }
 
         [Fact]
