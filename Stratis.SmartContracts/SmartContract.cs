@@ -110,7 +110,7 @@ namespace Stratis.SmartContracts
         /// <returns>The address of the signer.</returns>
         protected Address EcRecover(byte[] message, byte[] signature)
         {
-            return this.state.EcRecoverProvider.GetSigner(message, signature);
+            return this.contractState.EcRecoverProvider.GetSigner(message, signature);
         }
 
         /// <summary>
