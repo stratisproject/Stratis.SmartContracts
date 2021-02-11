@@ -8,7 +8,7 @@
     <Version>2.0.1-dev</Version>
     <PackageId>Stratis.SmartContracts</PackageId>
 	<CodeAnalysisRuleSet>..\None.ruleset</CodeAnalysisRuleSet>
-	<AssemblyVersion>1.4.1.0</AssemblyVersion>
+	<AssemblyVersion>2.0.1.0</AssemblyVersion>
   </PropertyGroup>
 
 </Project>

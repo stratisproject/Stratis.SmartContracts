@@ -7,11 +7,11 @@ namespace Stratis.SmartContracts
     {
         const int WIDTH = 16;
 
-        private UIntBase value;
+        internal UIntBase value;
 
         public static UInt128 Zero => 0;
         public static UInt128 MinValue => 0;
-        public static UInt128 MaxValue => (BigInteger.One << (WIDTH * 8)) - 1;
+        public static UInt128 MaxValue => new UInt128((BigInteger.One << (WIDTH * 8)) - 1);
 
         public UInt128(string hex)
         {
@@ -23,7 +23,7 @@ namespace Stratis.SmartContracts
             return new UInt128(str);
         }
 
-        public UInt128(BigInteger value)
+        internal UInt128(BigInteger value)
         {
             this.value = new UIntBase(WIDTH, value);
         }
@@ -157,39 +157,24 @@ namespace Stratis.SmartContracts
             return new UInt128(value);
         }
 
-        public static implicit operator UInt128(BigInteger value)
-        {
-            return new UInt128(value);
-        }
-
-        public static implicit operator UInt128(UInt256 value)
-        {
-            return new UInt128(value);
-        }
-
-        public static implicit operator int(UInt128 value)
+        public static explicit operator int(UInt128 value)
         {
             return (int)value.value.GetValue();
         }
 
-        public static implicit operator uint(UInt128 value)
+        public static explicit operator uint(UInt128 value)
         {
             return (uint)value.value.GetValue();
         }
 
-        public static implicit operator long(UInt128 value)
+        public static explicit operator long(UInt128 value)
         {
             return (long)value.value.GetValue();
         }
 
-        public static implicit operator ulong(UInt128 value)
+        public static explicit operator ulong(UInt128 value)
         {
             return (ulong)value.value.GetValue();
-        }
-
-        public static implicit operator BigInteger(UInt128 value)
-        {
-            return value.value.GetValue();
         }
 
         public byte[] ToBytes()
