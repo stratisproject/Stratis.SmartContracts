@@ -11,6 +11,7 @@ namespace Stratis.SmartContracts
         IInternalTransactionExecutor InternalTransactionExecutor { get; }
         IInternalHashHelper InternalHashHelper { get; }
         ISerializer Serializer { get; }
+        IEcRecoverProvider EcRecoverProvider { get; }
         Func<ulong> GetBalance { get; }
     }
 }
