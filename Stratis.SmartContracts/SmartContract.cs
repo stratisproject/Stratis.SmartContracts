@@ -120,7 +120,7 @@ namespace Stratis.SmartContracts
         /// <param name="signatures">The signatures which are passed as a byte array that is a multiple of 65 bytes in length.</param>
         /// <param name="addresses">The addresses to match the signatures to or <c>null</c> if all addresses should be returned.</param>
         /// <returns>The addresses that signed the message (limited to <paramref name="addresses"/> if not <c>null</c>).</returns>
-        protected Address[] VerifySignatures(string message, byte[] signatures, Address[] addresses)
+        protected Address[] VerifySignatures(byte[] message, byte[] signatures, Address[] addresses)
         {
             return this.contractState.EcRecoverProvider.VerifySignatures(message, signatures, addresses);
         }
