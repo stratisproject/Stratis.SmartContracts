@@ -8,7 +8,7 @@ namespace Stratis.SmartContracts
         private int width;
         private BigInteger value;
 
-        public UIntBase(int width)
+        public UIntBase(int width) : this()
         {
             if ((width & 3) != 0)
                 throw new ArgumentException($"The '{nameof(width)}' must be a multiple of 4.");
